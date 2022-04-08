@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH -A uot143
+#SBATCH --job-name="twitter.local"
+#SBATCH --output="twitter.local.out"
+#SBATCH --partition=compute
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=4
+#SBATCH --export=ALL 
+#SBATCH --time=10
+
+module load openjdk
+SW=/expanse/lustre/projects/uot143/fegaras
+export HADOOP_HOME=$SW/hadoop-3.2.2
+export PIG_HOME=$SW/pig-0.17.0
+PATH="$PIG_HOME/bin:$HADOOP_HOME/bin:$PATH"
+export TMPDIR=$HOME/tmp
+
+rm -rf output
+pig -x local -param G=small-twitter.csv -param O=output twitter.pig
