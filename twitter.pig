@@ -1,4 +1,4 @@
-A = LOAD 'small-twitter.csv' USING PigStorage(',') AS ( user:int, follower:int );
+A = LOAD '$G' USING PigStorage(',') AS ( user:int, follower:int );
 B = GROUP A BY follower;
 --DUMP B;
 --Describe B;
@@ -11,4 +11,4 @@ D = GROUP C BY $1;
 O = FOREACH D GENERATE $0, COUNT(C);
 --DUMP O;
 --Describe O;
-STORE O INTO 'output' USING PigStorage (',');
+STORE O INTO '$O' USING PigStorage (',');
